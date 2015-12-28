@@ -57,7 +57,7 @@ label {
   color: #db1919;
   font-size: 14px;
 }
-.more_detail a:hover, a:visited, a:active, a:link {
+.more_detail a:hover {
   color: #db1919;
   font-size: 14px;
 }

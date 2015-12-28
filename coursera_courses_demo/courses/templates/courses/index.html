@@ -29,8 +29,7 @@ $('document').ready(function(){
 				date = datetime.toDateString();
 				tokens = date.split(' '),
 				date = tokens[1] +' '+ tokens[2] + ', ' + tokens[3];
-				time = datetime.toLocaleTimeString();
-				timestamp = date + ', '+ time;
+				timestamp = date;
 				htmlContent+=("<div class='col-sm-4'><div class='course-box'><p><strong>Title:</strong> "+val.name+"</p><p><strong>University Name:</strong> "+val.partner.name+"</p><p><strong>Date:</strong> "+timestamp + "</p><p><strong>Language:</strong> "+val.language.name+"</p><p class='more_detail'><a href='/course/"+val.id+"/'>More Detail<span class='arrow'></span></a></p></div></div>");
 			});
 			$('#id_cources').html(htmlContent);
