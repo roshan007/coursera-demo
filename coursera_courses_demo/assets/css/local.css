@@ -1,0 +1,115 @@
+a {
+  text-decoration: none !important;
+}
+header {
+  min-height: 100px;
+  background: #0e3042 !important;
+}
+
+footer {
+  position: relative;
+  width: 100%;
+  background: #0e3042;
+  padding: 25px 0px 20px 0px;
+  z-index: 100;
+}
+footer .navbar-header section {
+  color: #F2E4E4 !important;
+  font-size: 16px;
+}
+@media screen and (max-width: 768px) {
+    header .navbar-narrow {
+      margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  header .navbar-right {
+    margin-top: 20px !important;
+  }
+  .more_detail {
+      position: initial !important;
+      text-align: right;
+  }
+}
+.course-box {
+  margin: 4% 0;
+  border-radius: 7px;
+  box-shadow: 1px 1px 3px 1px rgba(204,204,204,0.75);
+  padding: 1.25rem;
+  min-height: 220px;
+}
+label {
+  padding-left: 15px;
+}
+.heading {
+  color: #ed5565;
+  text-align: center;
+}
+.error {
+  color: red;
+}
+.more_detail {
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+}
+.more_detail a {
+  color: #db1919;
+  font-size: 14px;
+}
+.more_detail a:hover {
+  color: #db1919;
+  font-size: 14px;
+}
+.back {
+  color: #db1919;
+  font-size: 14px;
+}
+.back:hover {
+  color: #db1919;
+  font-size: 14px;
+}
+.more_detail a .arrow {
+  background: url("../img/arrow.png") no-repeat;
+  width: 14px;
+  height: 10px;
+  display: inline-block;
+  margin-left: 5px;
+}
+.left-arrow {
+  -moz-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  -o-transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  background: url("../img/arrow.png") no-repeat;
+  width: 14px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 5px;
+}
+.icons {
+  width: 18px;
+  margin-right: 15px;
+}
+#id_cources_detail {
+  padding-bottom: 25px;
+}
+.spinner-modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url("/static/img/loader.gif") 
+                50% 50% 
+                no-repeat;
+}
+body.loading {
+    overflow: hidden;
+}
+body.loading .spinner-modal {
+    display: block;
+}

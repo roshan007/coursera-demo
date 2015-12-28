@@ -1,0 +1,45 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+{% block title %}
+	Home Page
+{% endblock %}
+{% block content %}
+<section class="container" style="min-height: 480px;">
+	<h1 class="heading">Courses</h1>
+	<div class="row">
+		<div class="col-sm-12" id="id_cources">
+		</div>
+	</div>
+	<div class="spinner-modal"></div>
+</section>
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript">
+$('document').ready(function(){
+	$body = $("body");
+	$body.addClass("loading");
+	$.ajax({
+		url: "{% url 'course_list' %}",
+		dataType: 'json',
+		success: function(response) {
+			$body.removeClass("loading");
+			var htmlContent="";
+			$.each(response.courses,function(key,val){
+				var datetime = new Date(val.startDate);
+				date = datetime.toDateString();
+				tokens = date.split(' '),
+				date = tokens[1] +' '+ tokens[2] + ', ' + tokens[3];
+				time = datetime.toLocaleTimeString();
+				timestamp = date + ', '+ time;
+				htmlContent+=("<div class='col-sm-4'><div class='course-box'><p><strong>Title:</strong> "+val.name+"</p><p><strong>University Name:</strong> "+val.partner.name+"</p><p><strong>Date:</strong> "+timestamp + "</p><p><strong>Language:</strong> "+val.language.name+"</p><p class='more_detail'><a href='/course/"+val.id+"/'>More Detail<span class='arrow'></span></a></p></div></div>");
+			});
+			$('#id_cources').html(htmlContent);
+		},
+		error: function(response){
+			alert(response.responseText);
+		}
+	});
+});
+</script>
+{% endblock %}
+<!-- 3079779 -->

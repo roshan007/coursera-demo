@@ -1,0 +1,59 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+{% block title %}
+	Course Detail
+{% endblock %}
+{% block content %}
+<section class="container" style="min-height: 480px;">
+	<a href="{% url 'main' %}" class="back"><span class="left-arrow"></span>Back To List</a>
+	<div class="row">
+		<div class="col-sm-12" id="id_cources_detail">
+		</div>
+	</div>
+	<div class="spinner-modal"></div>
+</section>
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript">
+$('document').ready(function(){
+	$body = $("body");
+	$body.addClass("loading");
+	$.ajax({
+		url: window.location.href+"api/",
+		dataType: 'json',
+		success: function(response) {
+			$body.removeClass("loading");
+			var htmlContent="";
+			$.each(response.course,function(key,val){
+				var datetime = new Date(val.startDate);
+				date = datetime.toDateString();
+				tokens = date.split(' '),
+				date = tokens[1] +' '+ tokens[2] + ', ' + tokens[3];
+				time = datetime.toLocaleTimeString();
+				timestamp = date + ', '+ time;
+				if (val.partner) {
+					partner = '<h1 class="heading">Partner</h1><div class="media"><a class="media-left" href="#"><img class="media-object" src="'+val.partnerLogo+'" alt="Generic placeholder image" width="180px"></a><div class="media-body"><h4 class="media-heading">'+val.partner[0].name+'( '+val.partner[0].shortName+' )</h4><p><img src="/static/img/globe41.png" class="icons"><a href="'+val.partner[0].links.website+'">'+val.partner[0].links.website+'</a></p><p><img src="/static/img/facebook55.png" class="icons"><a href="https://www.facebook.com/'+val.partner[0].links.facebook+'">'+val.partner[0].links.facebook+'</a></p><p><img src="/static/img/twitter1.png" class="icons"><a href="https://twitter.com/'+val.partner[0].links.twitter+'">'+val.partner[0].links.twitter+'</a></p><p><img src="/static/img/youtube17.png" class="icons"><a href="https://www.youtube.com/'+val.partner[0].links.youtube+'">'+val.partner[0].links.youtube+'</a></p><p><strong>Location:</strong> '+val.partner[0].location.name+'</p><p style="text-align: justify;"><strong>About:</strong> '+val.partner[0].description+'</p></div></div>';
+				} else {
+					partner = '';
+				}
+				if (val.instructor) {
+					instructor = '<h1 class="heading">Instructor</h1><div class="media"><a class="media-left" href="#"><img class="media-object" src="'+val.instructor[0].photo+'" alt="Generic placeholder image" width="180px"></a><div class="media-body"><h4 class="media-heading">'+val.instructor[0].fullName+'</h4><p>'+val.instructor[0].title+'</p><p>'+val.instructor[0].department+'</p><p style="text-align: justify;">'+val.instructor[0].bio+'</p></div></div>';
+				} else {
+					instructor = "";
+				}
+				var certificates = "";
+				for (var i=0;i<val.certificates.length;i++){
+					certificates+=('<span>'+val.certificates[i]+', </span>')
+				}
+				htmlContent+=('<h1 class="heading">Course Details</h1><div class="media"><a class="media-left" href="#"><img class="media-object" src="'+val.photoUrl+'" alt="Generic placeholder image" width="180px"></a><div class="media-body"><h4 class="media-heading">'+val.name+'</h4><p><strong>Date:</strong> '+val.startDate+'</p><p><strong>Language:</strong> '+val.language.name+'</p><p><strong>Course Type:</strong> '+val.courseType+'</p><p><strong>Certificates:</strong> '+certificates+'</p><p style="text-align: justify;"><strong>About:</strong> '+val.description+'</p></div></div>'+partner+instructor);
+			});
+			$('#id_cources_detail').html(htmlContent);
+		},
+		error: function(response){
+			alert(response.responseText);
+		}
+	});
+});
+</script>
+{% endblock %}
+<!-- 3079779 -->
