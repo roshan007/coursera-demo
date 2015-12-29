@@ -63,10 +63,10 @@ $('document').ready(function(){
 			$('#id_cources_detail').html(htmlContent);
 		},
 		error: function(response){
-			alert(response.responseText);
+			alert("Some Error Occured");
+			location.reload();
 		}
 	});
 });
 </script>
 {% endblock %}
-<!-- 3079779 -->

@@ -5,7 +5,27 @@
 {% endblock %}
 {% block content %}
 <section class="container" style="min-height: 480px;">
-	<h1 class="heading">Courses</h1>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="col-sm-8">
+				<h1 class="pull-left heading">Courses</h1>
+			</div>
+			<div class="col-sm-2">
+				<select id="month" class="form-control mtb20">
+					{% for m in month %}
+					<option value="{{m.0}}">{{m.1}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<select id="year" class="form-control mtb20">
+					{% for y in year %}
+					<option value="{{y.0}}">{{y.1}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-12" id="id_cources">
 		</div>
@@ -16,10 +36,18 @@
 {% block extrascript %}
 <script type="text/javascript">
 $('document').ready(function(){
+	$('#month').val("{% now 'm' %}");
+	$('#year').val("{% now 'Y' %}");
+	get_course_list("{% url 'course_list' %}");
+});
+$('#month, #year').on("change", function(){
+	get_course_list("{% url 'course_list' %}?month="+$('#month').val()+"&year="+$('#year').val());
+})
+function get_course_list(url){
 	$body = $("body");
 	$body.addClass("loading");
 	$.ajax({
-		url: "{% url 'course_list' %}",
+		url: url,
 		dataType: 'json',
 		success: function(response) {
 			$body.removeClass("loading");
@@ -33,12 +61,15 @@ $('document').ready(function(){
 				htmlContent+=("<div class='col-sm-4'><div class='course-box'><p><strong>Title:</strong> "+val.name+"</p><p><strong>University Name:</strong> "+val.partner.name+"</p><p><strong>Date:</strong> "+timestamp + "</p><p><strong>Language:</strong> "+val.language.name+"</p><p class='more_detail'><a href='/course/"+val.id+"/'>More Detail<span class='arrow'></span></a></p></div></div>");
 			});
 			$('#id_cources').html(htmlContent);
+			if (response.courses.length == 0) {
+				$('#id_cources').html("<h3 class='heading text-center mt120'>No Course found for "+$('#month option[value='+$('#month').val()+']').text()+" "+$('#year option[value='+$('#year').val()+']').text()+"</h3>");	
+			}
 		},
 		error: function(response){
-			alert(response.responseText);
+			// alert("Some Error Occured");
+			// location.reload();
 		}
 	});
-});
+};
 </script>
 {% endblock %}
-<!-- 3079779 -->
